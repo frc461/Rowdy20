@@ -20,6 +20,8 @@
 #define VOLTAGE_IN 5
 #define PROGRAM_NUM 8
 
+using namespace frc;
+
 class Robot : public frc::TimedRobot {
 public:
 	void RobotInit() override;
@@ -46,11 +48,11 @@ private:
 	WPI_TalonSRX *Elevator0;
 	WPI_VictorSPX *Elevator1;
 
-	WPI_TalonSRX *Taco;
-	DoubleSolenoid *TacoPos;
+	WPI_VictorSPX *Taco;
+	frc::Solenoid *TacoPos;
 
 	WPI_VictorSPX *Intake;
-	DoubleSolenoid *IntakePos;
+	frc::Solenoid *IntakePos;
 
 	Joystick *leftJoystick;
 	Joystick *rightJoystick;
@@ -67,9 +69,23 @@ private:
 
 	Encoder *ElevatorEncoder;
 
-	DoubleSolenoid *Iris;
+	frc::Solenoid *Iris;
+	WPI_VictorSPX *IrisGrabber;
+	AnalogInput *IrisSensor;
+
+	frc::Solenoid *Climber;
 
 	PowerDistributionPanel *pdp;
+
+	AnalogOutput *LEDHeight;
+
+	AnalogOutput *LEDProgram;
+
+	enum AnalogIO {
+		IrisSense,
+		LEDheight,
+		LEDPrograms
+	};
 
 	enum DigitalIO {
 		ElevateTop,
@@ -88,15 +104,14 @@ private:
 		elevator0,
 		elevator1,
 		intake,
-		taco
+		taco,
+		iris
 	};
 
 	enum Pneumatics {
-		IrisA,
-		IrisB,
-		IntakeA,
-		IntakeB,
-		TacoA,
-		TacoB,
+		IrisP,
+		TacoP,
+		IntakeP,
+		ClimberP
 	};
 };

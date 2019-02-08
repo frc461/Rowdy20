@@ -35,13 +35,20 @@ void Robot::RobotInit() {
 	ElevatorTop = new DigitalInput(ElevateTop);
 	ElevatorBottom = new DigitalInput(ElevateBottom);
 
-	Taco = new WPI_TalonSRX(CanChain::taco);
-	TacoPos = new DoubleSolenoid(TacoA, TacoB);
+	Taco = new WPI_VictorSPX(CanChain::taco);
+	TacoPos = new Solenoid(TacoP);
 
 	Intake = new WPI_VictorSPX(CanChain::intake);
-	IntakePos = new DoubleSolenoid(IntakeA, IntakeB);
+	IntakePos = new Solenoid(IntakeP);
 
-	Iris = new DoubleSolenoid(IrisA, IrisB);
+	Iris = new Solenoid(IrisP);
+	IrisGrabber = new WPI_VictorSPX(iris);
+	IrisSensor = new AnalogInput(IrisSense);
+
+	LEDHeight = new AnalogOutput(LEDheight);
+	LEDProgram = new AnalogOutput(LEDPrograms);
+
+	Climber = new Solenoid(ClimberP);
 
 	rightSide = new SpeedControllerGroup(*RMotor0,*RMotor1,*RMotor2);
 	leftSide = new SpeedControllerGroup(*LMotor0, *LMotor1, *LMotor2);
@@ -52,7 +59,7 @@ void Robot::RobotInit() {
 	ElevatorEncoder = new Encoder(ElevateEncoderA, ElevateEncoderB, false, Encoder::EncodingType::k4X);
 	ElevatorEncoder->Reset();
 
-	pdp = new PowerDistributionPanel();
+	// pdp = new PowerDistributionPanel();
 }
 
 void Robot::AutonomousInit() {
@@ -63,14 +70,20 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+
 	frc::SmartDashboard::PutNumber("Rate of Elevator Encoder(units/sec)", ElevatorEncoder->GetRate());
 
-	driveTrain->ArcadeDrive(rightJoystick->GetRawAxis(yAxisJS), leftJoystick->GetRawAxis(xAxisJS));
+	driveTrain->ArcadeDrive(-rightJoystick->GetRawAxis(yAxisJS), leftJoystick->GetRawAxis(xAxisJS));
 
-	std::cout << "Elevator Encoder MAX: " << ElevatorEncoder->Get() << std::endl;
+	//std::cout << "Elevator Encoder MAX: " << ElevatorEncoder->Get() << std::endl;
 
-	elevator->Set(operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY));
-	if (ElevatorTop->Get() && operatingControl->GetRawAxis(XboxAxisRightStickY) > 0)
+	elevator->Set(operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY)*0.5-0.1);
+	
+	if (operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY) < 0 && ElevatorEncoder->Get()/ELEVATOR_MAX < 0.1 && TacoPos->Get() == false)
+	{
+		Taco->Set(0.75);
+	}
+	/*if (ElevatorTop->Get() && operatingControl->GetRawAxis(XboxAxisRightStickY) > 0)
 	{
 		elevator->Set(0);
 	}
@@ -88,8 +101,9 @@ void Robot::TeleopPeriodic() {
 	}
 	if (ElevatorEncoder->Get() >= ELEVATOR_MAX/2 )
 	{
+
 		elevator->Set((operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY))*0.5);
-	}
+	}*/
 
 	if (operatingControl->GetRawButton(XboxJoystickButton::XboxButtonLeftBumper)) {
 		Taco->Set(0.75);
@@ -101,54 +115,67 @@ void Robot::TeleopPeriodic() {
 		Taco->Set(0);
 	}
 
-	if (operatingControl->GetRawButton(XboxButtonY))
+	if (operatingControl->GetRawButton(XboxButtonA))
 	{
-		TacoPos->Set(DoubleSolenoid::kForward);
+		IntakePos->Set(true);
+		TacoPos->Set(true);
 	}
-	else if (operatingControl->GetRawButton(XboxButtonA))
+	else if (operatingControl->GetRawButton(XboxButtonY))
 	{
-		TacoPos->Set(DoubleSolenoid::kReverse);
+		TacoPos->Set(false);
 	}
 
-	if (operatingControl->GetRawButton(XboxButtonX))
+	if (operatingControl->GetRawButton(XboxButtonX) && IntakePos->Get() == false)
 	{
-		Iris->Set(DoubleSolenoid::kForward);
+		Iris->Set(true);
 	}
 	else if (operatingControl->GetRawButton(XboxButtonB))
 	{
-		Iris->Set(DoubleSolenoid::kReverse);
+		Iris->Set(false);
+	}
+	if (!(operatingControl->GetRawButton(XboxButtonX) && Iris->Get() == true))
+	{
+		Iris->Set(false);
 	}
 
 	if (operatingControl->GetRawButton(XboxButtonBack))
 	{
-		IntakePos->Set(DoubleSolenoid::kForward);
+		TacoPos->Set(true);
+		//IntakePos->Set(true);
 	}
 	if (operatingControl->GetRawButton(XboxButtonStart))
 	{
-		IntakePos->Set(DoubleSolenoid::kReverse);
+		IntakePos->Set(false);
 	}
 
-
 	if (operatingControl->GetRawButton(XboxJoystickButton::XboxButtonRightBumper)) {
-			Intake->Set(0.75);
-		}
-		else if (operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightTrigger)>0.3) {
-			Intake->Set(-0.75);
-		}
-		else {
-			Intake->Set(0);
-		}
+		Intake->Set(1);
+	}
+	else if (operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightTrigger)>0.3) {
+		IntakePos->Set(true);
+		Intake->Set(-0.75);
+	}
+	else {
+		IntakePos->Set(false);
+		Intake->Set(0);
+	}
 
-	std::cout << pdp->GetCurrent(1) << std::endl;
+	if(IntakePos->Get()){
+		std::cout << "intake down";
+	}
 
+	IrisGrabber->Set(operatingControl->GetRawAxis(XboxAxisLeftStickX));
+	std::cout << "Iris Sensor: " << IrisSensor->GetVoltage() << std::endl;
+
+	// std::cout << pdp->GetCurrent(1) << std::endl;
+
+	//LED routine
+	LEDHeight->SetVoltage((ElevatorEncoder->Get()/ELEVATOR_MAX) * 5);
+
+	if (ElevatorEncoder->Get()/ELEVATOR_MAX >= 0.98) {
+		LEDProgram->SetVoltage(5);
+	}
 }
-
-void Programs()
-{
-
-}
-
-
 
 void Robot::TestPeriodic() {}
 
