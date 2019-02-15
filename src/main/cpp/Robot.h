@@ -14,11 +14,20 @@
 #include <ctre/Phoenix.h>
 #include "THRSTMSTRmap.h"
 #include "XboxJoystickMap.h"
+#include "ElevatorPIDOutput.h"
+#include "ElevatorPIDSource.h"
+#include <sys/timeb.h>
+#include <iostream>
 
-#define ELEVATOR_MAX 100
-#define ELEVATOR_MIN 0
+#define ELEVATOR_MAX 3150
+#define ELEVATOR_MAX_BUFFER 2500
+#define ELEVATOR_MIN 1
+#define ELEVATOR_MIN_BUFFER 400
+#define IRIS_VOL_MAX 4.79
+#define IRIS_VOL_MIN 4.73
 #define VOLTAGE_IN 5
 #define PROGRAM_NUM 8
+#define IRIS_SPEED 0.3
 
 using namespace frc;
 
@@ -36,6 +45,8 @@ private:
 	const std::string kAutoNameDefault = "Default";
 	const std::string kAutoNameCustom = "My Auto";
 	std::string m_autoSelected;
+
+	double elevatorJoystick();
 
 	WPI_TalonSRX *RMotor0;
 	WPI_VictorSPX *RMotor1;
@@ -64,16 +75,17 @@ private:
 
 	DifferentialDrive *driveTrain;
 
-	DigitalInput *ElevatorTop;
-	DigitalInput *ElevatorBottom;
+	DigitalInput *ElevatorDown;
 
 	Encoder *ElevatorEncoder;
 
 	frc::Solenoid *Iris;
 	WPI_VictorSPX *IrisGrabber;
-	AnalogInput *IrisSensor;
 
 	frc::Solenoid *Climber;
+
+	WPI_TalonSRX *Climb0;
+	WPI_VictorSPX *Climb1;
 
 	PowerDistributionPanel *pdp;
 
@@ -81,15 +93,28 @@ private:
 
 	AnalogOutput *LEDProgram;
 
+	AnalogInput *IrisPot;
+
+	nt::NetworkTableEntry *hudElevatorLimit;
+
+	PIDController *ElevatorPID;
+
+	ElevatorPIDOutput *elevatorPIDOutput;
+
+	ElevatorPIDSource *elevatorPIDSource;
+
+	int intakeBuffer;
+
+	double elevatorSpeed;
+
 	enum AnalogIO {
-		IrisSense,
+		IrisPott,
 		LEDheight,
 		LEDPrograms
 	};
 
 	enum DigitalIO {
-		ElevateTop,
-		ElevateBottom,
+		ElevateDown,
 		ElevateEncoderA,
 		ElevateEncoderB
 	};
@@ -105,13 +130,15 @@ private:
 		elevator1,
 		intake,
 		taco,
-		iris
+		iris,
+		Climb_0,
+		Climb_1
 	};
 
 	enum Pneumatics {
 		IrisP,
 		TacoP,
 		IntakeP,
-		ClimberP
+		ClimberP,
 	};
 };
