@@ -23,6 +23,8 @@
 #define ELEVATOR_MAX_BUFFER 2500
 #define ELEVATOR_MIN 1
 #define ELEVATOR_MIN_BUFFER 400
+#define V_MAX 1024
+#define CURRENT_STRIKE 900
 #define IRIS_VOL_MAX 4.79
 #define IRIS_VOL_MIN 4.73
 #define VOLTAGE_IN 5
@@ -47,6 +49,9 @@ private:
 	std::string m_autoSelected;
 
 	double elevatorJoystick();
+
+	PowerDistributionPanel *TacoCurrentRead;
+	PowerDistributionPanel *IntakeCurrentRead;
 
 	WPI_TalonSRX *RMotor0;
 	WPI_VictorSPX *RMotor1;

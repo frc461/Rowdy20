@@ -24,6 +24,9 @@ void Robot::RobotInit() {
 
 	elevatorSpeed = 1;
 
+	TacoCurrentRead = new PowerDistributionPanel(0);
+	IntakeCurrentRead = new PowerDistributionPanel(1);
+
 	leftJoystick = new Joystick(0);
 	rightJoystick = new Joystick(1);
 	operatingControl = new Joystick(2);
@@ -270,12 +273,45 @@ void Robot::TeleopPeriodic() {
 	// std::cout << "Voltage Elevator: " << Elevator0->GetVoltage() << std::endl;
 
 	// std::cout << Elevator0->GetSelectedSensorPosition() << std::endl;
+	int numProgs = 8;
+	//Analog Version:
+	//Get the range for each program slice
+	double Range = V_MAX/numProgs;
 	//LED routine
 	LEDHeight->SetVoltage((ElevatorEncoder->Get()/ELEVATOR_MAX) * 5);
 
 	// Light switches according to position
-	if (ElevatorEncoder->Get()/ELEVATOR_MAX >= 0.98) {
-		LEDProgram->SetVoltage(5);
+	if (IrisPot->GetVoltage() < IRIS_VOL_MAX && operatingControl->GetRawAxis(XboxAxisRightStickX) > 0.3)
+	{
+		LEDProgram->SetVoltage(Range*2); // Iris 2nd prograam
+	}
+	else if (operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisLeftTrigger)>0.3) 
+	{
+		LEDProgram->SetVoltage(Range*3); // Tacoh 3rd program
+	}
+	else if (TacoCurrentRead->GetCurrent() >= CURRENT_STRIKE) 
+	{
+		LEDProgram->SetVoltage(Range*4); // DiskAquired 4th program
+	}
+	else if (IntakeCurrentRead->GetCurrent() >= CURRENT_STRIKE) 
+	{
+		LEDProgram->SetVoltage(Range*5); // BallAquired 5th program
+	}
+	else if (operatingControl->GetRawButton(XboxJoystickButton::XboxButtonRightBumper)) 
+	{
+		LEDProgram->SetVoltage(Range*6); // Celebration 6th program
+	}
+	else if (operatingControl->GetRawAxis(XboxJoystickAxis::XboxAxisRightTrigger)>0.3) 
+	{
+		LEDProgram->SetVoltage(Range*7); // Intake 7th program
+	}
+	else if (ElevatorEncoder->Get()/ELEVATOR_MAX >= 0.98) 
+	{
+		LEDProgram->SetVoltage(Range*8); // Warning 8th program
+	}
+	else 
+	{
+		LEDProgram->SetVoltage(Range); // Prematch 1st program
 	}
 
 	// hudElevatorLimit->SetBoolean(!ElevatorDown->Get());
