@@ -18,16 +18,25 @@
 #include "ElevatorPIDSource.h"
 #include <sys/timeb.h>
 #include <iostream>
+#include "ButtonBox.h"
 
 #define ELEVATOR_MAX 3150
 #define ELEVATOR_MAX_BUFFER 2500
 #define ELEVATOR_MIN 1
 #define ELEVATOR_MIN_BUFFER 400
-#define IRIS_VOL_MAX 4.79
-#define IRIS_VOL_MIN 4.73
+#define IRIS_VOL_MAX 1.9
+#define IRIS_VOL_MIN 1.5
 #define VOLTAGE_IN 5
 #define PROGRAM_NUM 8
 #define IRIS_SPEED 0.3
+#define BallTower0_H 0
+#define BallTower1_H 1558
+#define BallTower2_H 3106
+#define HatchTower0_H 418
+#define HatchTower1_H 2080
+#define HatchTower2_H 3310
+#define V_MAX 1024
+#define CURRENT_STRIKE 900
 
 using namespace frc;
 
@@ -68,6 +77,7 @@ private:
 	Joystick *leftJoystick;
 	Joystick *rightJoystick;
 	Joystick *operatingControl;
+	Joystick *ButtonBox;
 
 	SpeedControllerGroup *leftSide;
 	SpeedControllerGroup *rightSide;
@@ -82,7 +92,7 @@ private:
 	frc::Solenoid *Iris;
 	WPI_VictorSPX *IrisGrabber;
 
-	frc::Solenoid *Climber;
+	frc::Solenoid *ClimberWedge1;
 
 	WPI_TalonSRX *Climb0;
 	WPI_VictorSPX *Climb1;
@@ -106,6 +116,8 @@ private:
 	int intakeBuffer;
 
 	double elevatorSpeed;
+
+	double ElevatorLimitCheck(double in);
 
 	enum AnalogIO {
 		IrisPott,
@@ -139,6 +151,7 @@ private:
 		IrisP,
 		TacoP,
 		IntakeP,
-		ClimberP,
+		ClimberP1,
+	
 	};
 };
