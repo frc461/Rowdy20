@@ -83,7 +83,7 @@ void Robot::RobotInit() {
 	elevatorPIDSource = new ElevatorPIDSource();
 	elevatorPIDOutput = new ElevatorPIDOutput();
 
-	ElevatorPID = new PIDController(0.0005, 0.000009, 0.0000040, elevatorPIDSource, elevatorPIDOutput, 0.05);
+	ElevatorPID = new PIDController(0.0005, 0.000009, 0.0000040, 0.00125, elevatorPIDSource, elevatorPIDOutput, 0.05);
 	ElevatorPID->SetContinuous(true);
 	ElevatorPID->SetOutputRange(-1, 1);
 
@@ -95,9 +95,9 @@ void Robot::RobotInit() {
 
 	SmartDashboard::PutNumber("Elevator Speed", Elevator0->Get());
 	SmartDashboard::PutNumber("Elevator PID Setpoint", ElevatorPID->GetSetpoint());
-	SmartDashboard::PutNumber("Elevator PID kP", ElevatorPID->GetP());
-	SmartDashboard::PutNumber("Elevator PID kI", ElevatorPID->GetI());
-	SmartDashboard::PutNumber("Elevator PID kD", ElevatorPID->GetD());
+	SmartDashboard::PutNumber("Elevator PID kP", (ElevatorPID->GetP() * (100000)));
+	SmartDashboard::PutNumber("Elevator PID kI", (ElevatorPID->GetI() * (100000)));
+	SmartDashboard::PutNumber("Elevator PID kD", (ElevatorPID->GetD() * (100000)));
 
 	// Elevator0->SelectProfileSlot(0);
 	// Elevator0->SetPID(1000, 0, 0, 0);
@@ -379,15 +379,29 @@ void Robot::TeleopPeriodic() {
 		ClimberWedge1->Set(true);
 	}
 	
-	// SmartDashboard::PutNumber("Elevator Speed", Elevator0->Get());
-	// SmartDashboard::PutNumber("Elevator PID Setpoint", ElevatorPID->GetSetpoint());
-	// SmartDashboard::PutNumber("Elevator PID kP", ElevatorPID->GetP());
-	// SmartDashboard::PutNumber("Elevator PID kI", ElevatorPID->GetI());
-	// SmartDashboard::PutNumber("Elevator PID kD", ElevatorPID->GetD());
+	SmartDashboard::PutNumber("Elevator PID Setpoint", ElevatorPID->GetSetpoint());
+	SmartDashboard::PutNumber("Elevator Speed", Elevator0->Get());
+	SmartDashboard::PutNumber("Elevator PID kP", (ElevatorPID->GetP() * (100000)));
+	SmartDashboard::PutNumber("Elevator PID kI", ElevatorPID->GetI() * (100000));
+	SmartDashboard::PutNumber("Elevator PID kD", ElevatorPID->GetD() * (100000));
 
 	SmartDashboard::UpdateValues();
 
-	std::cout << SmartDashboard::GetNumber("Elevator PID kP", 10) << std::endl;
+	// std::cout << SmartDashboard::GetNumber("Elevator PID kP", 1) << std::endl;
+	// std::cout << "Error: " << ElevatorPID->GetAvgError() << std::endl;
+
+	SmartDashboard::PutNumber("Elevator PID Error", ElevatorPID->GetAvgError());
+	SmartDashboard::PutNumber("Elevator Encoder Value", Elevator0->GetSelectedSensorPosition());
+
+	// ElevatorPID->SetPID(SmartDashboard::GetNumber("Elevator PID kP", 1) * (0.00001), SmartDashboard::GetNumber("Elevator PID kI", 1) * (0.00001), SmartDashboard::GetNumber("Elevator PID kD", 1) * (0.00001));
+
+	// if(SmartDashboard::GetNumber("Elevator PID Setpoint", 0) != ElevatorPID->GetSetpoint()) {
+	// 	ElevatorPID->SetSetpoint(SmartDashboard::GetNumber("Elevator PID Setpoint", 0));	
+	// }
+
+	// if(SmartDashboard::GetNumber("Elevator PID Setpoint", 0) != ElevatorPID->GetSetpoint()){
+	// 	
+	// }
 
 	// int numProgs = 8;
 	// double Range = V_MAX/numProgs;
