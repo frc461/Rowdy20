@@ -48,6 +48,7 @@ public:
 	void TeleopInit() override;
 	void TeleopPeriodic() override;
 	void TestPeriodic() override;
+	void RobotPeriodic();
 
 private:
 	frc::SendableChooser<std::string> m_chooser;

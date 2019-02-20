@@ -20,6 +20,8 @@ double vIncrement = ((MaxEncHeight-0)/(VOLTAGE_IN-0))/PROGRAM_NUM;
 
 std::shared_ptr<NetworkTable> ntHud;
 
+double irisTime;
+
 void Robot::RobotInit() {
 
 	elevatorSpeed = 1;
@@ -112,6 +114,7 @@ void Robot::RobotInit() {
 void Robot::AutonomousInit() {
 }
 void Robot::AutonomousPeriodic() {
+	RobotPeriodic();
 }
 void Robot::TeleopInit() {
 	intakeBuffer = frc::GetTime() - 3000;
@@ -121,7 +124,7 @@ double Robot::ElevatorLimitCheck(double in){
 	return (!ElevatorDown->Get() && in < 0) ? 0 : in;
 }
 
-void Robot::TeleopPeriodic() {
+void Robot::RobotPeriodic() {
 
 	frc::SmartDashboard::PutNumber("Rate of Elevator Encoder(units/sec)", ElevatorEncoder->GetRate());
 
@@ -323,11 +326,24 @@ void Robot::TeleopPeriodic() {
 	// {
 	// 	IrisGrabber->Set(operatingControl->GetRawAxis(XboxAxisRightStickX) * IRIS_SPEED);
 	if(ButtonBox->GetRawButton(buttonbox::irisclosed)){
+		if(irisTime == 0){
+			irisTime = frc::GetTime();
+			std::cout << "Iris Init " << irisTime << std::endl;
+		}
 		IrisGrabber->Set(0.4);
 	}else if(ButtonBox->GetRawButton(buttonbox::irisopen)) {
 		IrisGrabber->Set(-0.4);	
 	}else {
 		IrisGrabber->Set(0);
+		if(irisTime != 0) {
+			irisTime = 0;
+			std::cout << "Iris Reset" << irisTime << std::endl;
+		}
+	}
+
+	if(irisTime + 400 < frc::GetTime() && irisTime != 0){
+		IrisGrabber->Set(0);
+		std::cout << "Stop Iris" << std::endl;
 	}
 
 	// ElevatorPID->SetSetpoint(1550);
@@ -384,6 +400,8 @@ void Robot::TeleopPeriodic() {
 	SmartDashboard::PutNumber("Elevator PID kP", (ElevatorPID->GetP() * (100000)));
 	SmartDashboard::PutNumber("Elevator PID kI", ElevatorPID->GetI() * (100000));
 	SmartDashboard::PutNumber("Elevator PID kD", ElevatorPID->GetD() * (100000));
+
+	SmartDashboard::PutNumber("Iris: ", IrisPot->GetVoltage());
 
 	SmartDashboard::UpdateValues();
 
@@ -443,8 +461,14 @@ void Robot::TeleopPeriodic() {
 	// }
 
 	// Climber->Set(false);
+	// std::cout << "Iris: " <<  IrisPot->GetVoltage() << std::endl;
+
 }
 
 void Robot::TestPeriodic() {}
+
+void Robot::TeleopPeriodic() {
+	RobotPeriodic();
+}
 
 START_ROBOT_CLASS(Robot)
