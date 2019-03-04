@@ -5,22 +5,29 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 void Robot::RobotInit() {
-
+  control = new Control();
+  elevator = new RobotElevator(control);
+  driveTrain = new DriveTrain(control);
 }
 
 void Robot::RobotPeriodic() {
-
+  
 }
 
 void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() {
+  elevator->Periodic();
+  driveTrain->Periodic();
 }
 
 void Robot::TeleopInit() {}
 
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+  elevator->Periodic();
+  driveTrain->Periodic();
+}
 
 void Robot::TestPeriodic() {}
 

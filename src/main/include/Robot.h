@@ -4,7 +4,9 @@
 
 #include <WPILib.h>
 
-#include <Control.h>
+#include "Control.h"
+#include "Elevator.h"
+#include "DriveTrain.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -17,9 +19,7 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  Controls *controls;
-  Joystick *leftJoystick;
-  Joystick *rightJoystick;
-  Joystick *override;
-  Joystick *operator;
+  Control *control;
+  RobotElevator *elevator;
+  DriveTrain *driveTrain;
 };
