@@ -21,6 +21,8 @@ class Control {
         double ElevatorOverrideJoystick();
         double LeftJoystickArcade();
         double RightJoystickArcade();
+        bool IntakeDown();
+        bool IntakeSpit();
         Control();
     private:
         frc::Joystick *leftJoystick;

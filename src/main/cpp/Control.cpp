@@ -30,3 +30,11 @@ double Control::RightJoystickArcade() {
 double Control::LeftJoystickArcade() {
     return leftJoystick->GetRawAxis(ThrustJoystickAxis::xAxisJS);
 }
+
+bool Control::IntakeDown(){
+    return operatorControl->GetRawButton(buttonbox::intakeout);
+}
+
+bool Control::IntakeSpit(){
+    return operatorControl->GetRawButton(buttonbox::intakein);
+}

@@ -8,6 +8,7 @@ void Robot::RobotInit() {
   control = new Control();
   elevator = new RobotElevator(control);
   driveTrain = new DriveTrain(control);
+  intakeArm = new IntakeArm(control);
 }
 
 void Robot::RobotPeriodic() {

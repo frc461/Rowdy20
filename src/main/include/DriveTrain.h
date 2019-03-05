@@ -1,7 +1,7 @@
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
-#include "CanStuff.h"
 
+#include "CanStuff.h"
 #include "Control.h"
 
 class DriveTrain {
