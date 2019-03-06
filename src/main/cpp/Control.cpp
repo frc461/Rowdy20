@@ -46,3 +46,15 @@ bool Control::TacohDown(){
 bool Control::TacohOut(){
     return operatorControl->GetRawButton(buttonbox::tacoout);
 }
+
+bool Control::IrisExpand(){
+    // reutrn operatorControl->GetRawButton(buttonbox::iirs)
+}
+
+bool Control::ElevatorSmallMoveGet(){
+    return ElevatorSmallMove;
+}
+
+void Control::ElevatorSmallMoveSet(bool move){
+    ElevatorSmallMove = move;
+}

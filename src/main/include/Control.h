@@ -25,8 +25,13 @@ class Control {
         bool IntakeSpit();
         bool TacohDown();
         bool TacohOut();
+        bool IrisExpand();
+        bool IrisShrink();
+        void ElevatorSmallMoveSet(bool move);
+        bool ElevatorSmallMoveGet();
         Control();
     private:
+        bool ElevatorSmallMove;
         frc::Joystick *leftJoystick;
         frc::Joystick *rightJoystick;
         frc::Joystick *overrideJoystick;

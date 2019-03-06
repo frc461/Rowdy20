@@ -4,7 +4,7 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
-void Robot::RobotInit() {
+void Robot::RobotInit() {  
   control = new Control();
   elevator = new RobotElevator(control);
   driveTrain = new DriveTrain(control);
