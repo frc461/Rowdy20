@@ -3,12 +3,16 @@
 
 #include "Control.h"
 #include "PneumaticsStuff.h"
-#include ""
+#include "CanStuff.h"
 
 class Tacoh {
     public:
-        Tacoh();
+        Tacoh(Control *control);
+        void Periodic();
     private:
+        Control *control;
         WPI_VictorSPX *TacohIntake;
         frc::Solenoid *TacohExtend;
-}
+        bool DownHasRun;
+        int Counter;
+};

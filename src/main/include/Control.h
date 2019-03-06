@@ -23,6 +23,8 @@ class Control {
         double RightJoystickArcade();
         bool IntakeDown();
         bool IntakeSpit();
+        bool TacohDown();
+        bool TacohOut();
         Control();
     private:
         frc::Joystick *leftJoystick;

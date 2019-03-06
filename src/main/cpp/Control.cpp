@@ -38,3 +38,11 @@ bool Control::IntakeDown(){
 bool Control::IntakeSpit(){
     return operatorControl->GetRawButton(buttonbox::intakein);
 }
+
+bool Control::TacohDown(){
+    return operatorControl->GetRawButton(buttonbox::tacoin);
+}
+
+bool Control::TacohOut(){
+    return operatorControl->GetRawButton(buttonbox::tacoout);
+}

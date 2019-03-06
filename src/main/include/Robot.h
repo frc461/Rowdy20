@@ -8,6 +8,7 @@
 #include "Elevator.h"
 #include "DriveTrain.h"
 #include "IntakeArm.h"
+#include "Tacoh.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -24,4 +25,5 @@ class Robot : public frc::TimedRobot {
   RobotElevator *elevator;
   DriveTrain *driveTrain;
   IntakeArm *intakeArm;
+  Tacoh *tacoh;
 };

@@ -9,6 +9,7 @@ void Robot::RobotInit() {
   elevator = new RobotElevator(control);
   driveTrain = new DriveTrain(control);
   intakeArm = new IntakeArm(control);
+  tacoh = new Tacoh(control);
 }
 
 void Robot::RobotPeriodic() {
@@ -21,6 +22,7 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {
   elevator->Periodic();
   driveTrain->Periodic();
+  tacoh->Periodic();
 }
 
 void Robot::TeleopInit() {}
@@ -28,6 +30,7 @@ void Robot::TeleopInit() {}
 void Robot::TeleopPeriodic() {
   elevator->Periodic();
   driveTrain->Periodic();
+  tacoh->Periodic();
 }
 
 void Robot::TestPeriodic() {}
