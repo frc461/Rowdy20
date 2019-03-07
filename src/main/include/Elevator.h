@@ -4,8 +4,8 @@
 #include "CanStuff.h"
 #include "Control.h"
 
-#define ELEVATOR_DEFAULT_SPEED 0.4
-#define ELEVATOR_MAX 3200
+#define ELEVATOR_DEFAULT_SPEED 0.7
+#define ELEVATOR_MAX 3400
 
 #define ELEVATOR_BallTower0 0
 #define ELEVATOR_BallTower1 1558
@@ -27,4 +27,5 @@ class RobotElevator {
         double idealPosition;
         void RunMotorSafe(double speed);
         frc::DigitalInput *LimitSwitch;
+        bool manualElevator;
 };

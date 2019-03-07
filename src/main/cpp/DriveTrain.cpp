@@ -17,5 +17,5 @@ DriveTrain::DriveTrain(Control *control){
 }
 
 void DriveTrain::Periodic() {
-    driveTrain->ArcadeDrive(control->LeftJoystickArcade(), control->RightJoystickArcade());
+    driveTrain->ArcadeDrive(control->RightJoystickArcade(), control->LeftJoystickArcade());
 }

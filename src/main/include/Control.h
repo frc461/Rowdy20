@@ -9,7 +9,7 @@
 class Control {
     public:
         enum ElevatorPosition {
-          manual,
+          manual = 0,
           BallTower0,
           BallTower1,
           BallTower2,
@@ -29,6 +29,8 @@ class Control {
         bool IrisShrink();
         void ElevatorSmallMoveSet(bool move);
         bool ElevatorSmallMoveGet();
+        bool getIrisExpand();
+        bool getIRisShrink();
         Control();
     private:
         bool ElevatorSmallMove;

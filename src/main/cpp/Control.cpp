@@ -15,12 +15,18 @@ Control::ElevatorPosition Control::RequestedPosition() {
         RequestedPosition = ElevatorPosition::HatchTower1;
     } else if(operatorControl->GetRawButton(buttonbox::hatchL2)){
         RequestedPosition = ElevatorPosition::HatchTower2;
+    } else if (operatorControl->GetRawButton(buttonbox::cargoL0)){
+         RequestedPosition = ElevatorPosition::BallTower0;
+    } else if (operatorControl->GetRawButton(buttonbox::cargoL1)){
+         RequestedPosition = ElevatorPosition::BallTower1;
+    } else if (operatorControl->GetRawButton(buttonbox::cargoL2)){
+         RequestedPosition = ElevatorPosition::BallTower2;
     }
     return RequestedPosition;
 }
 
 double Control::ElevatorOverrideJoystick(){
-    return overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisLeftStickY) * 0.5;
+    return overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisLeftStickY) * -0.5;
 }
 
 double Control::RightJoystickArcade() {
@@ -32,24 +38,24 @@ double Control::LeftJoystickArcade() {
 }
 
 bool Control::IntakeDown(){
-    return operatorControl->GetRawButton(buttonbox::intakeout);
-}
-
-bool Control::IntakeSpit(){
     return operatorControl->GetRawButton(buttonbox::intakein);
 }
 
-bool Control::TacohDown(){
-    return operatorControl->GetRawButton(buttonbox::tacoin);
+bool Control::IntakeSpit(){
+    return operatorControl->GetRawButton(buttonbox::intakeout);
 }
 
-bool Control::TacohOut(){
+bool Control::TacohDown(){
     return operatorControl->GetRawButton(buttonbox::tacoout);
 }
 
-bool Control::IrisExpand(){
-    // reutrn operatorControl->GetRawButton(buttonbox::iirs)
+bool Control::TacohOut(){
+    return operatorControl->GetRawButton(buttonbox::tacoin);
 }
+
+// bool Control::IrisExpand(){
+//     // reutrn operatorControl->GetRawButton(buttonbox::iirs)
+// }
 
 bool Control::ElevatorSmallMoveGet(){
     return ElevatorSmallMove;
@@ -57,4 +63,12 @@ bool Control::ElevatorSmallMoveGet(){
 
 void Control::ElevatorSmallMoveSet(bool move){
     ElevatorSmallMove = move;
+}
+
+bool Control::IrisExpand(){
+    return operatorControl->GetRawButton(buttonbox::irisopen);
+}
+
+bool Control::IrisShrink(){
+    return operatorControl->GetRawButton(buttonbox::irisclosed);
 }

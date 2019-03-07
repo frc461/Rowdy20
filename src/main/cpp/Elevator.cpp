@@ -10,6 +10,7 @@ RobotElevator::RobotElevator(Control *control) {
     this->control = control;
     idealPosition = 0;
     LimitSwitch = new frc::DigitalInput(0); //0 is the GPIO port the limit switch is plugged into
+    manualElevator = true;
 
     // std::thread elevatorThread(ElevatorThread);
     // elevatorThread.detach();
@@ -17,10 +18,11 @@ RobotElevator::RobotElevator(Control *control) {
 
 void RobotElevator::Periodic() {
 
-    std::cout << "Controller: " << control->RequestedPosition() << std::endl;
+    // std::cout << "Controller: " << control->RequestedPosition() << std::endl;
     std::cout << "Ideal Pos: " << idealPosition << std::endl;
-    std::cout << "Current Pos: " << Elevator0->GetSelectedSensorPosition() << std::endl;;
-    std::cout << "Brake State: " << brake->Get() << std::endl;
+    // std::cout << "Current Pos: " << Elevator0->GetSelectedSensorPosition() << std::endl;;
+    // std::cout << "Brake State: " << brake->Get() << std::endl;
+    // std::cout << "Joystick: " << control-
 
 
     // Elevator0->Set(control->ElevatorOverrideJoystick());
@@ -37,56 +39,75 @@ void RobotElevator::Periodic() {
     switch(control->RequestedPosition()) {
         case Control::ElevatorPosition::BallTower0:
             idealPosition = ELEVATOR_BallTower0;
+            manualElevator = false;
             break;
         case Control::ElevatorPosition::BallTower1:
             idealPosition = ELEVATOR_BallTower1;
+            manualElevator = false;
             break;
         case Control::ElevatorPosition::BallTower2:
             idealPosition = ELEVATOR_BallTower2;
+            manualElevator = false;
             break;
         case Control::ElevatorPosition::HatchTower0:
             idealPosition = ELEVATOR_HatchTower0;
+            manualElevator = false;
             break;
         case Control::ElevatorPosition::HatchTower1:
             idealPosition = ELEVATOR_HatchTower1;
+            manualElevator = false;
             break;
         case Control::ElevatorPosition::HatchTower2:
             idealPosition = ELEVATOR_HatchTower2;
+            manualElevator = false;
+            break;
+        case Control::manual:
+            idealPosition = 0;
+            manualElevator = true;
             break;
         default:
             break;
     }
 
     if(control->ElevatorSmallMoveGet()){
-        idealPosition = ELEVATOR_HatchTower1;
+        std::cout << "Hop" << std::endl;
+        idealPosition = 200;
+        manualElevator = false;
     }
 
     //Run motor with joystick, run to a position if it is not in use
-    if(control->ElevatorOverrideJoystick() > 0.1 || control->ElevatorOverrideJoystick() < -0.1){
-        RunMotorSafe(control->ElevatorOverrideJoystick() * ELEVATOR_DEFAULT_SPEED);
+    if(control->ElevatorOverrideJoystick() > 0.3 || control->ElevatorOverrideJoystick() < -0.3){
+        manualElevator = true;
+        RunMotorSafe(control->ElevatorOverrideJoystick());
     }else {
-        ElevatorThread();
+        if(manualElevator){
+            RunMotorSafe(0);
+        }else {
+            ElevatorThread();
+        }
+        
     }
 
     //Reset at Limit Switch
     if(!LimitSwitch->Get()){
         Elevator0->SetSelectedSensorPosition(0,0);
         // brake->Set(0);
-        RunMotorSafe(0);
+        // RunMotorSafe(0);
     }
 }
 
 void RobotElevator::RunMotorSafe(double speed) {
     speed = speed * -1;
+    std::cout << "Speed: " << speed << std::endl;
     if(speed == 0){
         brake->Set(0); //Apply the brake if we are not going down
         Elevator0->Set(0);
         std::cout << "Dont run down" << std::endl;
     }else {
-        if(LimitSwitch->Get() && speed > 0){
+        if(!LimitSwitch->Get() && speed > 0){
             Elevator0->Set(0);
         }else {
-            std::cout << "Speed: " << speed << std::endl;
+            
             brake->Set(1); 
             Elevator0->Set(speed);
         }

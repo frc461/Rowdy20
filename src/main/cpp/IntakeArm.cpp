@@ -5,10 +5,12 @@ IntakeArm::IntakeArm(Control *control){
 
     Intake = new WPI_VictorSPX(CanChain::intake);
     IntakeExtend = new frc::Solenoid(Pneumatics::IntakeP);
+    Intake->Set(0);
 }
 
 void IntakeArm::Periodic(){
     if(control->IntakeDown()){
+        control->ElevatorSmallMoveSet(true);
         Intake->Set(INTAKE_IN_SPEED);
         IntakeExtend->Set(1);
     }else if (control->IntakeSpit()){

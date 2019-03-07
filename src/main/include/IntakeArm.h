@@ -5,7 +5,8 @@
 #include "CanStuff.h"
 #include "PneumaticsStuff.h"
 
-#define IDLE_SPEED -0.05
+
+#define IDLE_SPEED -0.1
 #define INTAKE_IN_SPEED -1
 #define INTAKE_OUT_SPEED 0.75
 
