@@ -8,16 +8,17 @@
 #define ELEVATOR_MAX 3400
 
 #define ELEVATOR_BallTower0 0
-#define ELEVATOR_BallTower1 1558
-#define ELEVATOR_BallTower2 3106
-#define ELEVATOR_HatchTower0 418
+#define ELEVATOR_BallTower1 1658
+#define ELEVATOR_BallTower2 3206
+#define ELEVATOR_HatchTower0 468//was 418
 #define ELEVATOR_HatchTower1 2080
-#define ELEVATOR_HatchTower2 3310
+#define ELEVATOR_HatchTower2 3520
 
 class RobotElevator {
     public:
         RobotElevator(Control *control);
         void Periodic();
+        void SetIdealPos(int);
     private:
         WPI_TalonSRX *Elevator0;
         WPI_VictorSPX *Elevator1;

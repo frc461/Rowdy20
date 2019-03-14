@@ -1,4 +1,4 @@
-#include <WPILib.h>
+#include <frc/WPILib.h>
 #include <ctre/Phoenix.h>
 
 #include "CanStuff.h"
@@ -17,6 +17,8 @@ class DriveTrain {
         WPI_TalonSRX *LMotor0;
         WPI_VictorSPX *LMotor1;
         WPI_VictorSPX *LMotor2;
+
+        frc::PWMVictorSPX* BottomWheels;
 
         frc::SpeedControllerGroup *DTLeft;
         frc::SpeedControllerGroup *DTRight;

@@ -6,6 +6,14 @@
 #include "Control/XboxJoystickMap.h"
 #include "Control/THRSTMSTRmap.h"
 
+#define ELEVATOR_BallTower0 0
+#define ELEVATOR_BallTower1 1658
+#define ELEVATOR_BallTower2 3206
+#define ELEVATOR_HatchTower0 468//was 418
+#define ELEVATOR_HatchTower1 2080
+#define ELEVATOR_HatchTower2 3520
+#define MANUAL_CONSTANT 200
+
 class Control {
     public:
         enum ElevatorPosition {
@@ -17,21 +25,32 @@ class Control {
           HatchTower1,
           HatchTower2  
         }; 
+        ElevatorPosition CurrentPosition;
         ElevatorPosition RequestedPosition();
+        int RequestedPosition2();
         double ElevatorOverrideJoystick();
         double LeftJoystickArcade();
         double RightJoystickArcade();
+        bool CameraUpButton();
+        bool CameraDownButton();
+        bool ClimberFrontDown();
+        bool ClimberBackDown();
+        bool ClimberFrontUp();
+        bool ClimberBackUp();
+        bool ClimberBothDown();
         bool IntakeDown();
         bool IntakeSpit();
         bool TacohDown();
         bool TacohOut();
         bool IrisExpand();
         bool IrisShrink();
-        void ElevatorSmallMoveSet(bool move);
-        bool ElevatorSmallMoveGet();
+        bool IrisExtend();
+        //void ElevatorSmallMoveSet(bool move);
+        //bool ElevatorSmallMoveGet();
         bool getIrisExpand();
         bool getIRisShrink();
         Control();
+        int CurrentSetPoint;
     private:
         bool ElevatorSmallMove;
         frc::Joystick *leftJoystick;

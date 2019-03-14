@@ -8,8 +8,10 @@
 #include "PneumaticsStuff.h"
 #include "CanStuff.h"
 
+// ...Not Really Needed
 #define IRIS_MinVal 1.7
 #define IRIS_MaxVal 2.1
+//
 
 class Iris {
     public:
@@ -24,7 +26,10 @@ class Iris {
 
         frc::AnalogInput *pot;
 
-        bool state;
+        frc::DigitalInput *LimitIn;
+        frc::DigitalInput *LimitOut;
+
+        int state;
 
         Control *control;
 };

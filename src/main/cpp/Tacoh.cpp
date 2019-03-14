@@ -11,7 +11,7 @@ Tacoh::Tacoh(Control *control, Iris *iris) {
 
 void Tacoh::Periodic() {
     if(control->TacohDown()){
-        //TODO: Shrink iris
+        iris->Shrink();
         // control->ElevatorSmallMoveSet(1);
         TacohExtend->Set(1);
         TacohIntake->Set(0.8);

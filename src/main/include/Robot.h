@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include <WPILib.h>
+#include <frc/WPILib.h>
 
 #include "Control.h"
 #include "Elevator.h"
@@ -10,6 +10,8 @@
 #include "IntakeArm.h"
 #include "Tacoh.h"
 #include "Iris.h"
+#include "CamServo.h"
+#include "Climber.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -28,6 +30,6 @@ class Robot : public frc::TimedRobot {
   IntakeArm *intakeArm;
   Tacoh *tacoh;
   Iris *iris;
-
-
+  CamServo *camServo;
+  Climber *climber;
 };

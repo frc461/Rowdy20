@@ -12,23 +12,29 @@ Control::Control() {
     //ElevatorSmallMoveSet(0);
 }
 
-Control::ElevatorPosition Control::RequestedPosition() {
-    if (overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY) < -0.1 || overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY) > 0.1)
-        CurrentPosition = ElevatorPosition::manual;
-    else if(operatorControl->GetRawButton(buttonbox::hatchL0)){
-        CurrentPosition = ElevatorPosition::HatchTower0;
-    } else if(operatorControl->GetRawButton(buttonbox::hatchL1)){
-        CurrentPosition = ElevatorPosition::HatchTower1;
-    } else if(operatorControl->GetRawButton(buttonbox::hatchL2)){
-        CurrentPosition = ElevatorPosition::HatchTower2;
-    } else if (operatorControl->GetRawButton(buttonbox::cargoL0)){
-         CurrentPosition = ElevatorPosition::BallTower0;
-    } else if (operatorControl->GetRawButton(buttonbox::cargoL1)){
-         CurrentPosition = ElevatorPosition::BallTower1;
-    } else if (operatorControl->GetRawButton(buttonbox::cargoL2)){
-         CurrentPosition = ElevatorPosition::BallTower2;
+int Control::RequestedPosition2() { // ADD to .h
+    if (operatorControl->GetRawButton(buttonbox::cargoL0)) {
+        CurrentSetPoint = ELEVATOR_BallTower0;
     }
-    return CurrentPosition;
+    else if (operatorControl->GetRawButton(buttonbox::cargoL1)) {
+        CurrentSetPoint = ELEVATOR_BallTower1;
+    }
+    else if (operatorControl->GetRawButton(buttonbox::cargoL2)) {
+        CurrentSetPoint = ELEVATOR_BallTower2;
+    }
+    else if (operatorControl->GetRawButton(buttonbox::hatchL0)) {
+        CurrentSetPoint = ELEVATOR_HatchTower0;
+    }
+    else if (operatorControl->GetRawButton(buttonbox::hatchL1)) {
+        CurrentSetPoint = ELEVATOR_HatchTower1;
+    }
+    else if (operatorControl->GetRawButton(buttonbox::hatchL2)) {
+        CurrentSetPoint = ELEVATOR_HatchTower2;
+    }
+    else if (overrideJoystick->GetRawAxis(XboxAxisRightStickY) < -0.1 || overrideJoystick->GetRawAxis(XboxAxisRightStickY) > 0.1) {
+        CurrentSetPoint -= overrideJoystick->GetRawAxis(XboxAxisRightStickY)*MANUAL_CONSTANT;
+    }
+    return CurrentSetPoint;
 }
 
 double Control::ElevatorOverrideJoystick(){
@@ -85,19 +91,6 @@ bool Control::TacohDown(){
 bool Control::TacohOut(){
     return operatorControl->GetRawButton(buttonbox::tacoin);
 }
-
-// bool Control::IrisExpand(){
-//     // reutrn operatorControl->GetRawButton(buttonbox::iirs)
-// }
-/*
-bool Control::ElevatorSmallMoveGet(){
-    return ElevatorSmallMove;
-}
-
-void Control::ElevatorSmallMoveSet(bool move){
-    //std::cout << "SmallMove" << std::endl;
-    ElevatorSmallMove = move;
-}*/
 
 bool Control::IrisExpand(){
     return operatorControl->GetRawButton(buttonbox::irisopen);

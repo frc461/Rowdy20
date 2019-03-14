@@ -1,5 +1,7 @@
 #include "IntakeArm.h"
 
+
+
 IntakeArm::IntakeArm(Control *control){
     this->control = control;
 
@@ -10,7 +12,7 @@ IntakeArm::IntakeArm(Control *control){
 
 void IntakeArm::Periodic(){
     if(control->IntakeDown()){
-        control->ElevatorSmallMoveSet(true);
+       // control->ElevatorSmallMoveSet(true);
         Intake->Set(INTAKE_IN_SPEED);
         IntakeExtend->Set(1);
     }else if (control->IntakeSpit()){
@@ -19,5 +21,6 @@ void IntakeArm::Periodic(){
     } else {
         Intake->Set(IDLE_SPEED);
         IntakeExtend->Set(0);
+       // control->ElevatorSmallMoveSet(false);
     }
 }
