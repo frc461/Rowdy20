@@ -3,15 +3,16 @@
 #include <string>
 
 #include <frc/WPILib.h>
+#include <frc/Preferences.h>
 
 #include "Control.h"
 #include "Elevator.h"
 #include "DriveTrain.h"
 #include "IntakeArm.h"
 #include "Tacoh.h"
-#include "Iris.h"
 #include "CamServo.h"
 #include "Climber.h"
+#include "Iris.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -29,7 +30,10 @@ class Robot : public frc::TimedRobot {
   DriveTrain *driveTrain;
   IntakeArm *intakeArm;
   Tacoh *tacoh;
-  Iris *iris;
   CamServo *camServo;
+  Iris *iris;
   Climber *climber;
+  frc::Preferences *Climber_Values;
+  double FrontSpeed;
+  double BackSpeed;
 };

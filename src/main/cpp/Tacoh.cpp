@@ -2,17 +2,19 @@
 
 Tacoh::Tacoh(Control *control, Iris *iris) {
     this->control = control;
-    this->iris = iris;
     TacohIntake = new WPI_VictorSPX(CanChain::taco);
     TacohExtend = new frc::Solenoid(Pneumatics::TacoP);
+    //IrisControl = new frc::Solenoid();
+    this->iris = iris;
     DownHasRun = false;
     Counter = 0;
 }
 
 void Tacoh::Periodic() {
     if(control->TacohDown()){
-        iris->Shrink();
         // control->ElevatorSmallMoveSet(1);
+        iris->Shrink();
+        // IrisControl->Set(1);[]
         TacohExtend->Set(1);
         TacohIntake->Set(0.8);
         DownHasRun = true;

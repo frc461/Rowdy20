@@ -17,24 +17,6 @@ RobotElevator::RobotElevator(Control *control) {
 
 void RobotElevator::Periodic() {
 
-    // //std::cout << "Controller: " << control->RequestedPosition() << std::endl;
-    //std::cout << "Ideal Pos: " << idealPosition << std::endl;
-    // //std::cout << "Current Pos: " << Elevator0->GetSelectedSensorPosition() << std::endl;;
-    // //std::cout << "Brake State: " << brake->Get() << std::endl;
-    // //std::cout << "Joystick: " << control-
-
-
-    // Elevator0->Set(control->ElevatorOverrideJoystick());
-
-    // // control->ElevatorOverrideJoystick() > 0.1 || control->ElevatorOverrideJoystick() < -0.1
-    // if(Elevator0->Get() == 0){
-    //     //std::cout << "Speed Zero" << std::endl;
-    //     brake->Set(1);
-    // } else{
-    //     brake->Set(0);
-    // }
-
-    //std::cout << "Control: " << control->RequestedPosition() << std::endl;
     switch(control->RequestedPosition()) {
         case Control::ElevatorPosition::BallTower0:
             idealPosition = ELEVATOR_BallTower0;
@@ -68,12 +50,6 @@ void RobotElevator::Periodic() {
         default:
             break;
     }
-/*
-    if(control->ElevatorSmallMoveGet()){
-        //std::cout << "Hop" << std::endl;
-        idealPosition = 200;
-        manualElevator = false;
-    }*/
 
     //Run motor with joystick, run to a position if it is not in use
     if((control->ElevatorOverrideJoystick() > 0.1 || control->ElevatorOverrideJoystick() < -0.1) && control->RequestedPosition() == 0){

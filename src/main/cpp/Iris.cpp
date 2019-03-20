@@ -8,11 +8,9 @@ Iris::Iris(Control *control){
     LimitIn = new frc::DigitalInput(9);
     LimitOut = new frc::DigitalInput(8);
     IrisEject = new frc::Solenoid(Pneumatics::IrisP);
-    pot = new frc::AnalogInput(0);
 }
 
 void Iris::Periodic(){
-    //std::cout << "Voltage " << pot->GetVoltage() << std::endl;
 
     if (control->IrisExpand())
     {
@@ -25,11 +23,6 @@ void Iris::Periodic(){
     else {
         state = 3;
     }
-    /*if(control->IrisExpand()){
-        Expand();
-    }else if(control->IrisShrink()){
-        Shrink();
-    }*/
     if(state == 1) {
         if(LimitOut->Get()){
             IrisM->Set(-0.5);
@@ -56,15 +49,11 @@ void Iris::Periodic(){
     else if (LimitIn->Get()){
         //std::cout << "LimitIn" << std::endl;
     }
-   // std::cout << "LimitOut: " << LimitOut->Get() << std::endl;
-    //std::cout << "LimitIn: " << LimitIn->Get() << std::endl;
-    //std::cout << "State: " << state << std::endl;
 }
 
 // Limit switch Expanding
 void Iris::Expand(){
    state = 1;
-   //std::cout << "OUT" << std::endl;
 }
 //limit switch Shrinking
 void Iris::Shrink(){

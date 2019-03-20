@@ -14,7 +14,8 @@ class Tacoh {
         Control *control;
         WPI_VictorSPX *TacohIntake;
         frc::Solenoid *TacohExtend;
+        //frc::Solenoid *IrisControl
+        Iris *iris;
         bool DownHasRun;
         int Counter;
-        Iris *iris;
 };

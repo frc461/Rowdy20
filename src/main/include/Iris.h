@@ -8,11 +8,6 @@
 #include "PneumaticsStuff.h"
 #include "CanStuff.h"
 
-// ...Not Really Needed
-#define IRIS_MinVal 1.7
-#define IRIS_MaxVal 2.1
-//
-
 class Iris {
     public:
         Iris(Control *control);
@@ -23,8 +18,6 @@ class Iris {
     private:
         WPI_VictorSPX *IrisM;
         frc::Solenoid *IrisEject;
-
-        frc::AnalogInput *pot;
 
         frc::DigitalInput *LimitIn;
         frc::DigitalInput *LimitOut;

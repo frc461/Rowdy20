@@ -1,45 +1,43 @@
 #include "Climber.h"
 
-#include <iostream>
-
-using namespace std;
-
-Climber::Climber(Control* control) {
-    FrontClimb = new WPI_TalonSRX(CanChain::Climb_0); // Port # ?
+Climber::Climber(Control* control, double frontSpeed, double backSpeed) {
+    FrontClimb = new WPI_TalonSRX(CanChain::Climb_0);
     BackClimb = new WPI_VictorSPX(CanChain::Climb_1);
-
     this->control = control;
+    this->frontSpeed = frontSpeed;
+    this->backSpeed = backSpeed;
 }
 
 void Climber::Periodic() {
+    // Front Climber down
     if (control->ClimberFrontDown()) {
-        cout << "Front Climb Down" << endl;
-        FrontClimb->Set(FRONT_SPEED);
+        FrontClimb->Set(frontSpeed);
     }
+    // Back Climber down
     if (control->ClimberBackDown()) {
-        cout << "Back Climb Down" << endl;
-        BackClimb->Set(BACK_SPEED);
+        BackClimb->Set(backSpeed);
     }
-    else if (control->ClimberBothDown()) {
-        FrontClimb->Set(FRONT_SPEED);
-        BackClimb->Set(BACK_SPEED);
+    // Both F & B Climbers done
+    if (control->ClimberBothDown()) {
+        FrontClimb->Set(frontSpeed);
+        BackClimb->Set(backSpeed);
     }
-    else {
+
+    // Front Climber back up 
+    if (control->ClimberFrontUp()) {
+        FrontClimb->Set(-frontSpeed);
+    }
+    //Back Climber back up
+    if (control->ClimberBackUp()) {
+        BackClimb->Set(-backSpeed);
+    }
+    
+    // Setting to zero if none of the front climber controlling buttons are pressed
+    if (!control->ClimberFrontUp() && !control->ClimberFrontDown() && !control->ClimberBothDown()) {
         FrontClimb->Set(0);
+    }
+    // Setting to zero if none of the back climber controlling //////buttons are pressed
+    if (!control->ClimberBackUp() && !control->ClimberBackDown() && !control->ClimberBothDown()) {
         BackClimb->Set(0);
     }
-
-    if (control->ClimberFrontUp()) {
-        cout << "Front Climb Up" << endl;
-        FrontClimb->Set(-FRONT_SPEED);
-    }
-    if (control->ClimberBackUp()) {
-        cout << "Back Climb Up" << endl;
-        BackClimb->Set(-BACK_SPEED);
-    }
-    else {
-        FrontClimb->Set(0);
-        BackClimb->Set(0);        
-    }
-
 }
