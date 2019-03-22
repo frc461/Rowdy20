@@ -12,7 +12,8 @@
 #include "Tacoh.h"
 #include "CamServo.h"
 #include "Climber.h"
-#include "Iris.h"
+// #include "Iris.h"
+#include "Hatch.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -23,6 +24,8 @@ class Robot : public frc::TimedRobot {
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
+  void DisabledPeriodic() override;
+  void DisabledInit() override;
 
  private:
   Control *control;
@@ -31,8 +34,9 @@ class Robot : public frc::TimedRobot {
   IntakeArm *intakeArm;
   Tacoh *tacoh;
   CamServo *camServo;
-  Iris *iris;
+  // Iris *iris;
   Climber *climber;
+  Hatch *hatch;
   frc::Preferences *Climber_Values;
   double FrontSpeed;
   double BackSpeed;

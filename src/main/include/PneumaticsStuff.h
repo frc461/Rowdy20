@@ -2,10 +2,12 @@
 #define SRC_PNEUMATICSSTUFF_H_
 
 enum Pneumatics {
-    IrisP,
+    IrisExtendP,
     TacoP,
     IntakeP,
-    CLimberP1
+    CLimberP1,
+    Iris0P = 6,
+    Iris1P
 };
 
 #endif

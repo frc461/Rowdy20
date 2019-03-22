@@ -54,6 +54,26 @@
     "tuple": "cpp",
     "typeinfo": "cpp",
     "utility": "cpp",
-    "cstdarg": "cpp"
+    "cstdarg": "cpp",
+    "algorithm": "cpp",
+    "ios": "cpp",
+    "iterator": "cpp",
+    "list": "cpp",
+    "set": "cpp",
+    "string": "cpp",
+    "xthread": "cpp",
+    "xfacet": "cpp",
+    "xhash": "cpp",
+    "xiosbase": "cpp",
+    "xlocale": "cpp",
+    "xlocinfo": "cpp",
+    "xlocnum": "cpp",
+    "xmemory": "cpp",
+    "xmemory0": "cpp",
+    "xstddef": "cpp",
+    "xstring": "cpp",
+    "xtr1common": "cpp",
+    "xtree": "cpp",
+    "xutility": "cpp"
   }
 }

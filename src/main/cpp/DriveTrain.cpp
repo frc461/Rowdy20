@@ -10,7 +10,7 @@ DriveTrain::DriveTrain(Control *control){
     LMotor1 = new WPI_VictorSPX(CanChain::L_Motor1);
     LMotor2 = new WPI_VictorSPX(CanChain::L_Motor2);
 
-    BottomWheels = new frc::PWMVictorSPX(1);
+    BottomWheels = new WPI_VictorSPX(CanChain::Climb_Wheels);
 
     DTLeft = new frc::SpeedControllerGroup(*LMotor0, *LMotor1, *LMotor2);
     DTRight = new frc::SpeedControllerGroup(*RMotor0, *RMotor1, *RMotor2);
@@ -19,6 +19,6 @@ DriveTrain::DriveTrain(Control *control){
 }
 
 void DriveTrain::Periodic() {
-    driveTrain->ArcadeDrive(control->RightJoystickArcade(), control->LeftJoystickArcade());
+    driveTrain->ArcadeDrive(-control->RightJoystickArcade(), control->LeftJoystickArcade());
     BottomWheels->Set(control->RightJoystickArcade()); 
 }

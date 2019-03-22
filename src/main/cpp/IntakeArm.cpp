@@ -1,7 +1,5 @@
 #include "IntakeArm.h"
 
-
-
 IntakeArm::IntakeArm(Control *control){
     this->control = control;
 

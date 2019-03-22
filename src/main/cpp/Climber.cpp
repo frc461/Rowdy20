@@ -1,5 +1,7 @@
 #include "Climber.h"
 
+#include <iostream>
+
 Climber::Climber(Control* control, double frontSpeed, double backSpeed) {
     FrontClimb = new WPI_TalonSRX(CanChain::Climb_0);
     BackClimb = new WPI_VictorSPX(CanChain::Climb_1);
@@ -11,24 +13,29 @@ Climber::Climber(Control* control, double frontSpeed, double backSpeed) {
 void Climber::Periodic() {
     // Front Climber down
     if (control->ClimberFrontDown()) {
+        ////std::cout << "Front Climber Down" << //std::endl;
         FrontClimb->Set(frontSpeed);
     }
     // Back Climber down
     if (control->ClimberBackDown()) {
+        //std::cout << "Back Climber Down" << //std::endl;
         BackClimb->Set(backSpeed);
     }
     // Both F & B Climbers done
     if (control->ClimberBothDown()) {
-        FrontClimb->Set(frontSpeed);
-        BackClimb->Set(backSpeed);
+        //std::cout << "F&B Climber Down" << //std::endl;
+        FrontClimb->Set(-frontSpeed);
+        BackClimb->Set(-backSpeed);
     }
 
     // Front Climber back up 
     if (control->ClimberFrontUp()) {
+        //std::cout << "Front Climber Back Up" << //std::endl;
         FrontClimb->Set(-frontSpeed);
     }
     //Back Climber back up
     if (control->ClimberBackUp()) {
+        //std::cout << "Back Climber Back Up" << //std::endl;
         BackClimb->Set(-backSpeed);
     }
     

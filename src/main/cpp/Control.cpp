@@ -43,27 +43,27 @@ double Control::LeftJoystickArcade() {
 }
 
 bool Control::ClimberFrontDown() {
-    std::cout << "Front Down" << std::endl;
+    // std::cout << "Front Down" << std::endl;
     return leftJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
 }
 
 bool Control::ClimberBackDown() {
-    std::cout << "Back Down" << std::endl;
+    // std::cout << "Back Down" << std::endl;
     return rightJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
 }
 
 bool Control::ClimberFrontUp() {
-    std::cout << "Front Up" << std::endl;
+    // std::cout << "Front Up" << std::endl;
     return leftJoystick->GetRawButton(ThrustJoystickButtons::rightButton); // BUTTON ?
 }
 
 bool Control::ClimberBackUp() {
-    std::cout << "Back Up" << std::endl;
+    // std::cout << "Back Up" << std::endl;
     return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton); // BUTTON ?
 }
 
 bool Control::ClimberBothDown() {
-    std::cout << "Both Down" << std::endl;
+    // std::cout << "Both Down" << std::endl;
     return leftJoystick->GetRawButton(ThrustJoystickButtons::leftButton);
 }
 

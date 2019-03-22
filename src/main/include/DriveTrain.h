@@ -18,7 +18,7 @@ class DriveTrain {
         WPI_VictorSPX *LMotor1;
         WPI_VictorSPX *LMotor2;
 
-        frc::PWMVictorSPX* BottomWheels;
+        WPI_VictorSPX* BottomWheels;
 
         frc::SpeedControllerGroup *DTLeft;
         frc::SpeedControllerGroup *DTRight;

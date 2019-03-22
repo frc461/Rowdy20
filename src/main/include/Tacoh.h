@@ -4,18 +4,18 @@
 #include "Control.h"
 #include "PneumaticsStuff.h"
 #include "CanStuff.h"
-#include "Iris.h"
+#include "Hatch.h"
 
 class Tacoh {
     public:
-        Tacoh(Control *control, Iris *iris);
+        Tacoh(Control *control, Hatch *hatch);
         void Periodic();
     private:
         Control *control;
         WPI_VictorSPX *TacohIntake;
         frc::Solenoid *TacohExtend;
         //frc::Solenoid *IrisControl
-        Iris *iris;
         bool DownHasRun;
         int Counter;
+        Hatch *hatch;
 };
