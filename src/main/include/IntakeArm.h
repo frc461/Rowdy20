@@ -6,9 +6,11 @@
 #include "PneumaticsStuff.h"
 
 
-#define IDLE_SPEED -0.1
+#define IDLE_SPEED -0.15
+//0.08 Is also good
 #define INTAKE_IN_SPEED -1
 #define INTAKE_OUT_SPEED 0.6
+
 
 class IntakeArm {
     public:

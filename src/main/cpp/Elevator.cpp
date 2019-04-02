@@ -76,11 +76,12 @@ void RobotElevator::Periodic() {
         // brake->Set(0);
         // RunMotorSafe(0);p
     }
+    // std::cout << "Encoder" << Elevator0->GetSelectedSensorPosition() << std::endl;
 }
 
 void RobotElevator::RunMotorSafe(double speed) {
     speed = speed * -1;
-   // //std::cout << "Speed: " << speed << std::endl;
+//    std::cout << "Speed: " << speed << std::endl;
     if((speed < 0.1) && (speed > -0.1)){
      //   //std::cout << "speed in deadband, enable brake run motor safe" << std::endl;
         brake->Set(0); //Apply the brake if we are not going down
@@ -109,18 +110,26 @@ void RobotElevator::ElevatorThread() {
     if(abs(ELEVATOR_MAX - currentPosition)/ELEVATOR_MAX > 0.9){
         topSlow = 1 - abs(ELEVATOR_MAX - currentPosition)/ELEVATOR_MAX;
     }
+    */
 
 
-    if((currentPosition)/ELEVATOR_MAX < 0.1){
-        bottomSlow = abs(currentPosition)/ELEVATOR_MAX;
-    }*/
+    // if((currentPosition)/ELEVATOR_MAX < 0.2){
+    if(currentPosition < ELEVATOR_HatchTower0 && manualElevator) {
+        bottomSlow = 0.0;
+    }
 
+    // if(topSlow != 0 || bottomSlow != 0) {
+    //     std::cout << "Top Slow: " << topSlow  << std::endl;
+    //     std::cout << "Bottom Slow: " << bottomSlow<< std::endl;
+    // }
+    
     if((idealPosition - currentPosition) > 100){
-       // //std::cout << "Up" << std::endl;
-        RunMotorSafe(ELEVATOR_DEFAULT_SPEED + (idealPosition - currentPosition)/(ELEVATOR_MAX) - topSlow - bottomSlow);
+       // //std::cout << "Less" << std::endl;
+        RunMotorSafe(ELEVATOR_DEFAULT_SPEED + (idealPosition - currentPosition)/(ELEVATOR_MAX)*1.0 - bottomSlow);
+
     } else if((idealPosition - currentPosition) < -100) {
       //  //std::cout << "UDown" << std::endl;
-        RunMotorSafe(-1 * ELEVATOR_DEFAULT_SPEED/2 + 0.2 + topSlow + bottomSlow);
+        RunMotorSafe(-1 * ELEVATOR_DEFAULT_SPEED/2 + 0.2);
     } else {
        // //std::cout << "None" << std::endl;
         RunMotorSafe(0);

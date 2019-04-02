@@ -4,15 +4,21 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableEntry.h>
+#include <networktables/NetworkTableInstance.h>
+
 void Robot::RobotInit() {  
+  auto ntInst = nt::NetworkTableInstance::GetDefault();
+  auto table = ntInst.GetTable("HUD");
   control = new Control();
   elevator = new RobotElevator(control);
   driveTrain = new DriveTrain(control);
   intakeArm = new IntakeArm(control);
-  tacoh = new Tacoh(control, hatch);
+  tacoh = new Tacoh(control, hatch, table);
   camServo = new CamServo(control);
   // iris = new Iris(control);
-  hatch = new Hatch(control);
+  hatch = new Hatch(control, table);
 
   // Shuffle Board 
   /*

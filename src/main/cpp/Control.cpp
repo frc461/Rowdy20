@@ -26,6 +26,8 @@ Control::ElevatorPosition Control::RequestedPosition() {
          CurrentPosition = ElevatorPosition::BallTower1;
     } else if (operatorControl->GetRawButton(buttonbox::cargoL2)){
          CurrentPosition = ElevatorPosition::BallTower2;
+    } else if(Control::TacohOut()) {
+        CurrentPosition = ElevatorPosition::BallTower0;
     }
     return CurrentPosition;
 }
@@ -62,9 +64,13 @@ bool Control::ClimberBackUp() {
     return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton); // BUTTON ?
 }
 
-bool Control::ClimberBothDown() {
+bool Control::ClimberFrontDown3rd() {
     // std::cout << "Both Down" << std::endl;
     return leftJoystick->GetRawButton(ThrustJoystickButtons::leftButton);
+}
+
+bool Control::ClimberBackDown3rd() {
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::rightButton);
 }
 
 bool Control::CameraUpButton() {

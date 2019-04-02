@@ -6,9 +6,11 @@
 #include "CanStuff.h"
 #include "Hatch.h"
 
+#include <networktables/NetworkTableEntry.h>
+
 class Tacoh {
     public:
-        Tacoh(Control *control, Hatch *hatch);
+        Tacoh(Control *control, Hatch *hatch,  std::shared_ptr<nt::NetworkTable> HUD);
         void Periodic();
     private:
         Control *control;
@@ -18,4 +20,8 @@ class Tacoh {
         bool DownHasRun;
         int Counter;
         Hatch *hatch;
+        frc::DigitalInput *tacohSwitch;
+
+        nt::NetworkTableEntry ntTacoh;
+        nt::NetworkTableEntry ntTacohSwitch;
 };

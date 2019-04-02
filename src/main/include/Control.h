@@ -37,7 +37,8 @@ class Control {
         bool ClimberBackDown();
         bool ClimberFrontUp();
         bool ClimberBackUp();
-        bool ClimberBothDown();
+        bool ClimberFrontDown3rd();
+        bool ClimberBackDown3rd();
         bool IntakeDown();
         bool IntakeSpit();
         bool TacohDown();

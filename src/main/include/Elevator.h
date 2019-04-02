@@ -5,13 +5,14 @@
 #include "Control.h"
 
 #define ELEVATOR_DEFAULT_SPEED 0.7
+#define ELEVATOR_ZERO_SPEED 0
 #define ELEVATOR_MAX 3400
 
 #define ELEVATOR_BallTower0 0
 #define ELEVATOR_BallTower1 1658
 #define ELEVATOR_BallTower2 3206
-#define ELEVATOR_HatchTower0 468//was 418
-#define ELEVATOR_HatchTower1 2080
+#define ELEVATOR_HatchTower0 277//was 418
+#define ELEVATOR_HatchTower1 1870
 #define ELEVATOR_HatchTower2 3520
 
 class RobotElevator {
