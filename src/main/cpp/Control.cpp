@@ -37,7 +37,7 @@ Control::ElevatorPosition Control::RequestedPosition() {
 }
 
 double Control::ElevatorOverrideJoystick(){
-    return overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY) * -0.5;
+    return operatorControl->GetRawAxis(0) * -0.5;
 }
 
 double Control::RightJoystickArcade() {
