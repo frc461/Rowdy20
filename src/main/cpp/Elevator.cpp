@@ -43,6 +43,10 @@ void RobotElevator::Periodic() {
             idealPosition = ELEVATOR_HatchTower2;
             manualElevator = false;
             break;
+        case Control::ElevatorPosition::CargoShip0:
+            idealPosition = ELEVATOR_CargoShip0;
+            manualElevator = false;
+            break;
         case Control::manual:
             idealPosition = 0;
             manualElevator = true;
@@ -161,6 +165,10 @@ void RobotElevator::SetIdealPos(int PositionNum) {
             break;
         case Control::ElevatorPosition::HatchTower2:
             idealPosition = ELEVATOR_HatchTower2;
+            manualElevator = false;
+            break;
+        case Control::ElevatorPosition::CargoShip0:
+            // idealPosition = 
             manualElevator = false;
             break;
         case Control::manual:

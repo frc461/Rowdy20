@@ -14,6 +14,7 @@
 #define ELEVATOR_HatchTower0 277//was 418
 #define ELEVATOR_HatchTower1 1870
 #define ELEVATOR_HatchTower2 3520
+#define ELEVATOR_CargoShip0 1337
 
 class RobotElevator {
     public:

@@ -23,7 +23,8 @@ class Control {
           BallTower2,
           HatchTower0,
           HatchTower1,
-          HatchTower2  
+          HatchTower2,
+          CargoShip0
         }; 
         ElevatorPosition CurrentPosition;
         ElevatorPosition RequestedPosition();
@@ -50,6 +51,8 @@ class Control {
         //bool ElevatorSmallMoveGet();
         bool getIrisExpand();
         bool getIRisShrink();
+        bool ResetClimbEncoders();
+        bool Climb3PID();
         Control();
         int CurrentSetPoint;
     private:

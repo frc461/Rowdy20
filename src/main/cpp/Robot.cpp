@@ -26,7 +26,7 @@ void Robot::RobotInit() {
   FrontSpeed = Climber_Values->GetDouble("FrontSpeed", 0);
   BackSpeed = Climber_Values->GetDouble("BackSpeed", 0);
   */
-  climber = new Climber(control, -0.7, 0.9);
+  climber = new Climber(control, -0.75, 0.9);
 }
 
 void Robot::RobotPeriodic() {

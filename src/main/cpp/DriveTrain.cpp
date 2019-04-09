@@ -20,5 +20,5 @@ DriveTrain::DriveTrain(Control *control){
 
 void DriveTrain::Periodic() {
     driveTrain->ArcadeDrive(-control->RightJoystickArcade(), control->LeftJoystickArcade());
-    BottomWheels->Set(control->RightJoystickArcade()); 
+    BottomWheels->Set((control->RightJoystickArcade() > 0.2 || control->RightJoystickArcade() < -0.2) ? -1 : 0); 
 }

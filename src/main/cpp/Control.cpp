@@ -26,7 +26,11 @@ Control::ElevatorPosition Control::RequestedPosition() {
          CurrentPosition = ElevatorPosition::BallTower1;
     } else if (operatorControl->GetRawButton(buttonbox::cargoL2)){
          CurrentPosition = ElevatorPosition::BallTower2;
-    } else if(Control::TacohOut()) {
+    } 
+    // else if (operatorControl->GetRawButton(buttonbox::undefined0){
+        // CurrentPosition = ElevatorPosition::BallPosition4;
+    // }
+    else if(Control::TacohOut()) {
         CurrentPosition = ElevatorPosition::BallTower0;
     }
     return CurrentPosition;
@@ -46,31 +50,31 @@ double Control::LeftJoystickArcade() {
 
 bool Control::ClimberFrontDown() {
     // std::cout << "Front Down" << std::endl;
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
 }
 
 bool Control::ClimberBackDown() {
     // std::cout << "Back Down" << std::endl;
-    return rightJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
+    return leftJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
 }
 
 bool Control::ClimberFrontUp() {
     // std::cout << "Front Up" << std::endl;
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::rightButton); // BUTTON ?
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::rightButton); // BUTTON ?
 }
 
 bool Control::ClimberBackUp() {
     // std::cout << "Back Up" << std::endl;
-    return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton); // BUTTON ?
+    return leftJoystick->GetRawButton(ThrustJoystickButtons::leftButton); // BUTTON ?
 }
 
 bool Control::ClimberFrontDown3rd() {
     // std::cout << "Both Down" << std::endl;
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::leftButton);
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton);
 }
 
 bool Control::ClimberBackDown3rd() {
-    return rightJoystick->GetRawButton(ThrustJoystickButtons::rightButton);
+    return leftJoystick->GetRawButton(ThrustJoystickButtons::rightButton);
 }
 
 bool Control::CameraUpButton() {
@@ -121,3 +125,12 @@ bool Control::IrisExtend(){
     return operatorControl->GetRawButton(buttonbox::irisextend);
     
 }
+
+bool Control::ResetClimbEncoders() {
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::trigger);
+}
+
+bool Control::Climb3PID() {
+    return leftJoystick->GetRawButton(ThrustJoystickButtons::trigger);
+}
+
