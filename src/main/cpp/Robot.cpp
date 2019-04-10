@@ -15,7 +15,7 @@ void Robot::RobotInit() {
   elevator = new RobotElevator(control);
   driveTrain = new DriveTrain(control);
   intakeArm = new IntakeArm(control);
-  tacoh = new Tacoh(control, hatch, table);
+  tacoh = new Tacoh(control, hatch, elevator, table);
   camServo = new CamServo(control);
   // iris = new Iris(control);
   hatch = new Hatch(control, table);

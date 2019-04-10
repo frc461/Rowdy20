@@ -9,7 +9,7 @@
 
 bool counterState;
 
-Tacoh::Tacoh(Control *control, Hatch *hatch,  std::shared_ptr<nt::NetworkTable> HUD) {
+Tacoh::Tacoh(Control *control, Hatch *hatch,  RobotElevator *elevator, std::shared_ptr<nt::NetworkTable> HUD) {
     this->control = control;
     TacohIntake = new WPI_VictorSPX(CanChain::taco);
     TacohExtend = new frc::Solenoid(Pneumatics::TacoP);
@@ -25,6 +25,8 @@ Tacoh::Tacoh(Control *control, Hatch *hatch,  std::shared_ptr<nt::NetworkTable> 
     // downTempSinglePress = false;
 
     tacohSwitch = new frc::DigitalInput(1);
+
+    this->elevator = elevator;
 
     ntTacoh = HUD->GetEntry("tacoh");
     ntTacohSwitch = HUD->GetEntry("tacohHatch");
@@ -97,7 +99,7 @@ void Tacoh::Periodic() {
         //     TacohIntake->Set(0);
         // }
 
-        if(control->IntakeDown()) {
+        if(control->IntakeDown() && elevator->EncoderValue() <= ELEVATOR_HatchTower0) {
             if(counterState == 0) {
                 Counter = 0;
                 counterState = 1;

@@ -179,3 +179,7 @@ void RobotElevator::SetIdealPos(int PositionNum) {
             break;
     }
 }
+
+double RobotElevator::EncoderValue() {
+    return Elevator0->GetSelectedSensorPosition();
+}

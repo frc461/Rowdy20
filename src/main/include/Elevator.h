@@ -17,11 +17,15 @@
 #define ELEVATOR_CargoShip0 851
 
 
+#ifndef SRC_ELEVATOR_H_
+#define SRC_ELEVATOR_H_
 class RobotElevator {
     public:
         RobotElevator(Control *control);
         void Periodic();
         void SetIdealPos(int);
+
+        double EncoderValue();
     private:
         WPI_TalonSRX *Elevator0;
         WPI_VictorSPX *Elevator1;
@@ -33,3 +37,5 @@ class RobotElevator {
         frc::DigitalInput *LimitSwitch;
         bool manualElevator;
 };
+
+#endif
