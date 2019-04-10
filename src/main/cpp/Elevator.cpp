@@ -58,7 +58,7 @@ void RobotElevator::Periodic() {
     //Run motor with joystick, run to a position if it is not in use
     if((control->ElevatorOverrideJoystick() > 0.1 || control->ElevatorOverrideJoystick() < -0.1) && control->RequestedPosition() == 0){
         //manualElevator = true;
-        RunMotorSafe(control->ElevatorOverrideJoystick());
+        RunMotorSafe((control->ElevatorOverrideJoystick() < -0.1) ? control->ElevatorOverrideJoystick() * 0.8 : control->ElevatorOverrideJoystick() * 1.8);
     }else {
         //std::cout << "manual override" << std::endl;
 
@@ -133,7 +133,7 @@ void RobotElevator::ElevatorThread() {
 
     } else if((idealPosition - currentPosition) < -100) {
       //  //std::cout << "UDown" << std::endl;
-        RunMotorSafe(-1 * ELEVATOR_DEFAULT_SPEED/2 + 0.2);
+        RunMotorSafe(-1 * ELEVATOR_DEFAULT_SPEED * 0.65 + 0.2);
     } else {
        // //std::cout << "None" << std::endl;
         RunMotorSafe(0);

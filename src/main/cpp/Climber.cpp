@@ -17,7 +17,7 @@ Climber::Climber(Control* control, double frontSpeed, double backSpeed) {
 }
 
 void Climber::Periodic() {
-    std::cout << frontEncoder->Get() << std::endl;
+    // std::cout << frontEncoder->Get() << std::endl;
 
     if(control->ResetClimbEncoders()){
         backEncoder->Reset();
@@ -37,13 +37,13 @@ void Climber::Periodic() {
     }
     // Back Climber down
     if (control->ClimberBackDown()) {
-        std::cout << "Back Climber Down" << std::endl;
+        // std::cout << "Back Climber Down" << std::endl;
         BackClimb->Set(0.6);
         
     }
     //Back Climber back up
     else if (control->ClimberBackUp()) {
-        std::cout << "Back Climber Back Up" << std::endl;
+        // std::cout << "Back Climber Back Up" << std::endl;
         BackClimb->Set(-0.6);
     } else {
         BackClimb->Set(0);

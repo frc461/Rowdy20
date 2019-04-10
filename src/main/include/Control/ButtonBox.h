@@ -1,5 +1,5 @@
 enum buttonbox{
-    elevatordown = 1, 
+    cargoship = 1, 
     elevatorup,
     intakein,
     intakeout,

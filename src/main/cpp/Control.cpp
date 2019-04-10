@@ -5,14 +5,14 @@
 Control::Control() {
     leftJoystick= new frc::Joystick(0);
     rightJoystick = new frc::Joystick(1);
-    overrideJoystick = new frc::Joystick(2);
-    operatorControl = new frc::Joystick(3);
+    overrideJoystick = new frc::Joystick(4);
+    operatorControl = new frc::Joystick(2);
     ElevatorPosition CurrentPosition = ElevatorPosition::manual;
     //ElevatorSmallMoveSet(0);
 }
 
 Control::ElevatorPosition Control::RequestedPosition() {
-    if (overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY) < -0.1 || overrideJoystick->GetRawAxis(XboxJoystickAxis::XboxAxisRightStickY) > 0.1)
+    if (operatorControl->GetRawAxis(0) < -0.1 || operatorControl->GetRawAxis(0) > 0.1)
         CurrentPosition = ElevatorPosition::manual;
     else if(operatorControl->GetRawButton(buttonbox::hatchL0)){
         CurrentPosition = ElevatorPosition::HatchTower0;
@@ -27,9 +27,9 @@ Control::ElevatorPosition Control::RequestedPosition() {
     } else if (operatorControl->GetRawButton(buttonbox::cargoL2)){
          CurrentPosition = ElevatorPosition::BallTower2;
     } 
-    // else if (operatorControl->GetRawButton(buttonbox::undefined0){
-        // CurrentPosition = ElevatorPosition::BallPosition4;
-    // }
+    else if (operatorControl->GetRawButton(buttonbox::cargoship)){
+        CurrentPosition = ElevatorPosition::CargoShip0;
+    }
     else if(Control::TacohOut()) {
         CurrentPosition = ElevatorPosition::BallTower0;
     }
@@ -50,38 +50,42 @@ double Control::LeftJoystickArcade() {
 
 bool Control::ClimberFrontDown() {
     // std::cout << "Front Down" << std::endl;
-    return rightJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton); // BUTTON ?
 }
 
 bool Control::ClimberBackDown() {
     // std::cout << "Back Down" << std::endl;
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
+    return leftJoystick->GetRawButton(ThrustJoystickButtons::rightButton); // BUTTON ?
 }
 
 bool Control::ClimberFrontUp() {
     // std::cout << "Front Up" << std::endl;
-    return rightJoystick->GetRawButton(ThrustJoystickButtons::rightButton); // BUTTON ?
+    return rightJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
 }
 
 bool Control::ClimberBackUp() {
     // std::cout << "Back Up" << std::endl;
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::leftButton); // BUTTON ?
+    return leftJoystick->GetRawButton(ThrustJoystickButtons::thumbSwitch); // BUTTON ?
 }
 
 bool Control::ClimberFrontDown3rd() {
     // std::cout << "Both Down" << std::endl;
-    return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton);
+    // return rightJoystick->GetRawButton(ThrustJoystickButtons::leftButton);
+    return 0;
 }
 
 bool Control::ClimberBackDown3rd() {
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::rightButton);
+    // return leftJoystick->GetRawButton(ThrustJoystickButtons::rightButton);
+    return 0;
 }
 
 bool Control::CameraUpButton() {
-    return overrideJoystick->GetRawButton(XboxButtonB);
+//     return overrideJoystick->GetRawButton(XboxButtonB);
+    return 0;
 }
 bool Control::CameraDownButton() {
-    return overrideJoystick->GetRawButton(XboxButtonA);
+    // return overrideJoystick->GetRawButton(XboxButtonA);
+    return 0;
 }
 
 bool Control::IntakeDown(){
