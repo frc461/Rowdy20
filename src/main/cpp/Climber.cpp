@@ -38,13 +38,13 @@ void Climber::Periodic() {
     // Back Climber down
     if (control->ClimberBackDown()) {
         // std::cout << "Back Climber Down" << std::endl;
-        BackClimb->Set(0.6);
+        BackClimb->Set(backSpeed);
         
     }
     //Back Climber back up
     else if (control->ClimberBackUp()) {
         // std::cout << "Back Climber Back Up" << std::endl;
-        BackClimb->Set(-0.6);
+        BackClimb->Set(-backSpeed);
     } else {
         BackClimb->Set(0);
     }

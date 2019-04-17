@@ -53,6 +53,8 @@ class Control {
         bool getIRisShrink();
         bool ResetClimbEncoders();
         bool Climb3PID();
+        bool OverrideSW();
+        bool OverrideAutoTacoh();
         Control();
         int CurrentSetPoint;
     private:

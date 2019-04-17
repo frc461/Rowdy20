@@ -27,4 +27,6 @@ class Tacoh {
         nt::NetworkTableEntry ntTacohSwitch;
 
         RobotElevator  *elevator;
+        
+        bool AutoSwitchEnabled;
 };

@@ -23,6 +23,7 @@ Tacoh::Tacoh(Control *control, Hatch *hatch,  RobotElevator *elevator, std::shar
     // IntakeTempT = 0;
     // downTemp = false;
     // downTempSinglePress = false;
+    AutoSwitchEnabled = true;
 
     tacohSwitch = new frc::DigitalInput(1);
 
@@ -33,18 +34,26 @@ Tacoh::Tacoh(Control *control, Hatch *hatch,  RobotElevator *elevator, std::shar
 }
 
 void Tacoh::Periodic() {
+    //TODO: TacohDown and TacohOut neeed to be swapped in control
     if(control->TacohDown()){
         // control->ElevatorSmallMoveSet(1);
         // iris->Shrink();
         // hatch->Shrink();
         // IrisControl->Set(1);[]
+        
+        
         TacohExtend->Set(1);
         TacohIntake->Set(0.8);
         // DownHasRun = false;
     }else if(control->TacohOut()){
         // control->ElevatorSmallMoveSet(1);
-        TacohExtend->Set(1);
-        TacohIntake->Set(-0.8);
+        if(!tacohSwitch->Get() && AutoSwitchEnabled){
+            TacohExtend->Set(0);
+            TacohIntake->Set(0);
+        }else {
+            TacohExtend->Set(1);
+            TacohIntake->Set(-0.8);
+        }
         // DownHasRun = false;
     } else {
         // control->ElevatorSmallMoveSet(0);
@@ -127,6 +136,11 @@ void Tacoh::Periodic() {
         ntTacoh.SetBoolean(true);
     }else {
         ntTacoh.SetBoolean(false);
+    }
+
+    if(control->OverrideAutoTacoh()) {
+        // std::cout << "Auto Tacoh DISABLE" << std::endl;
+        AutoSwitchEnabled = false;
     }
 
     ntTacohSwitch.SetBoolean(!tacohSwitch->Get());

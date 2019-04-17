@@ -1,0 +1,16 @@
+--DONE-- Crank up PI elevator speed factor (NOT DEFAULT)
+
+make sure manual elevator works
+
+check if default speed holds elevator steady without brake
+
+add extra buttons to do just lvl2 climb that don't get interferance from lvl3 pi climb
+
+code for automatic tacoh to hatch mechanism
+
+automatic hatch grabbing with new limit switch
+
+manual override with the button box blue switch that disabled the auto intake
+
+--DONE-- if the elevator is above a certain height, the tacoh shouldn't articulate when the cargo intake comes down to save air
+

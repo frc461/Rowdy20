@@ -50,14 +50,16 @@ void Hatch::Periodic() {
         ntExtend.SetBoolean(false);
     }
 
-    if(!hatchSwitch->Get()) {
-        //std::cout << hatchSwitch->Get() << std::endl;
-        if(!switchActivateOnce) {
-            switchActivateOnce = true;
-            Hatch::Shrink();
+    if(!control->OverrideSW()) {
+        if(!hatchSwitch->Get()) {
+            //std::cout << hatchSwitch->Get() << std::endl;
+            if(!switchActivateOnce) {
+                switchActivateOnce = true;
+                Hatch::Shrink();
+            }
+        } else {
+            switchActivateOnce = false;
         }
-    } else {
-        switchActivateOnce = false;
     }
 }
 
