@@ -20,7 +20,7 @@ Control::ElevatorPosition Control::RequestedPosition() {
         CurrentPosition = ElevatorPosition::HatchTower1;
     } else if(operatorControl->GetRawButton(buttonbox::hatchL2)){
         CurrentPosition = ElevatorPosition::HatchTower2;
-    } else if (operatorControl->GetRawButton(buttonbox::cargoL0) || operatorControl->GetRawButton(buttonbox::intakein)){
+    } else if (operatorControl->GetRawButton(buttonbox::cargoL0)){
          CurrentPosition = ElevatorPosition::BallTower0;
     } else if (operatorControl->GetRawButton(buttonbox::cargoL1)){
          CurrentPosition = ElevatorPosition::BallTower1;
@@ -138,10 +138,3 @@ bool Control::Climb3PID() {
     return leftJoystick->GetRawButton(ThrustJoystickButtons::trigger);
 }
 
-bool Control::OverrideSW() {
-    return 0;
-}
-
-bool Control::OverrideAutoTacoh() {
-    return leftJoystick->GetRawButton(ThrustJoystickButtons::bottomRightLeft);
-}

@@ -27,8 +27,6 @@ void Robot::RobotInit() {
   BackSpeed = Climber_Values->GetDouble("BackSpeed", 0);
   */
   climber = new Climber(control, -0.75, 0.9);
-  compressor = new frc::Compressor(0);
-  ntCompressor = table->GetEntry("compressor");
 }
 
 void Robot::RobotPeriodic() {
@@ -66,7 +64,6 @@ void Robot::TeleopPeriodic() {
   hatch->Periodic();
   intakeArm->Periodic();
   tacoh->Periodic();
-  ntCompressor.SetBoolean(!compressor->GetPressureSwitchValue());
 }
 
 void Robot::TestPeriodic() {}

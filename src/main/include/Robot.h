@@ -40,7 +40,4 @@ class Robot : public frc::TimedRobot {
   frc::Preferences *Climber_Values;
   double FrontSpeed;
   double BackSpeed;
-
-  frc::Compressor *compressor;
-  nt::NetworkTableEntry ntCompressor;
 };

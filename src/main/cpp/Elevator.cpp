@@ -129,11 +129,11 @@ void RobotElevator::ElevatorThread() {
     
     if((idealPosition - currentPosition) > 100){
        // //std::cout << "Less" << std::endl;
-        RunMotorSafe(ELEVATOR_DEFAULT_SPEED + (idealPosition - currentPosition)/(ELEVATOR_MAX)*1.8 - bottomSlow);
+        RunMotorSafe(ELEVATOR_DEFAULT_SPEED + (idealPosition - currentPosition)/(ELEVATOR_MAX)*1.0 - bottomSlow);
 
     } else if((idealPosition - currentPosition) < -100) {
       //  //std::cout << "UDown" << std::endl;
-        RunMotorSafe(-1 * ELEVATOR_DEFAULT_SPEED * 0.9);
+        RunMotorSafe(-1 * ELEVATOR_DEFAULT_SPEED * 0.65 + 0.2);
     } else {
        // //std::cout << "None" << std::endl;
         RunMotorSafe(0);
@@ -168,6 +168,7 @@ void RobotElevator::SetIdealPos(int PositionNum) {
             manualElevator = false;
             break;
         case Control::ElevatorPosition::CargoShip0:
+            // idealPosition = 
             manualElevator = false;
             break;
         case Control::manual:
